@@ -1,0 +1,211 @@
+{
+  "_readme": "Backup content. Used until the Google Sheet is connected (GOOGLE_SHEET_ID). Entries with \"sample\": true are examples – replace them.",
+  "club": {
+    "email": "hello@example.com",
+    "phone": "",
+    "ground": "Evandale, Tasmania",
+    "ground_address": "",
+    "map_query": "Evandale Tasmania",
+    "facebook": "https://www.facebook.com/EvandalePanthers/",
+    "instagram": "",
+    "playhq_url": "",
+    "training": "Tuesday & Thursday, 5:30pm",
+    "registration_url": ""
+  },
+  "teams": [
+    {
+      "name": "A Grade",
+      "blurb": "Our top senior side.",
+      "plays": "Saturdays",
+      "training": "Tue & Thu, 5:30pm"
+    },
+    {
+      "name": "B Grade",
+      "blurb": "Senior cricket with a social edge.",
+      "plays": "Saturdays",
+      "training": "Tue & Thu, 5:30pm"
+    },
+    {
+      "name": "Juniors",
+      "blurb": "For kids learning and loving the game.",
+      "plays": "Friday evenings",
+      "training": "Wed, 4:30pm"
+    }
+  ],
+  "squad": [
+    {
+      "name": "Player One",
+      "role": "Batter",
+      "team": "A Grade",
+      "captain": "C",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Two",
+      "role": "Bowler",
+      "team": "A Grade",
+      "captain": "VC",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Three",
+      "role": "All-rounder",
+      "team": "A Grade",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Four",
+      "role": "Keeper",
+      "team": "A Grade",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Five",
+      "role": "Batter",
+      "team": "B Grade",
+      "captain": "C",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Six",
+      "role": "Bowler",
+      "team": "B Grade",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Seven",
+      "role": "All-rounder",
+      "team": "B Grade",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Eight",
+      "role": "Bowler",
+      "team": "B Grade",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    }
+  ],
+  "news": [
+    {
+      "date": "2026-11-03",
+      "title": "Welcome to the new Panthers website",
+      "summary": "Fixtures, results and the ladder now update straight from PlayHQ. Follow along all season.",
+      "link": "",
+      "image": ""
+    },
+    {
+      "date": "2026-10-10",
+      "title": "Registrations open for 2026/27",
+      "summary": "New and returning players can register now. Come to training to say hello first if you're new.",
+      "link": "#join",
+      "image": "",
+      "sample": true
+    }
+  ],
+  "gallery": [],
+  "sponsors": [],
+  "fixtures": [
+    {
+      "date": "2026-10-17",
+      "time": "13:00",
+      "team": "A Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Evandale",
+      "home": true,
+      "result": "Won by 5 wkts"
+    },
+    {
+      "date": "2026-10-24",
+      "time": "13:00",
+      "team": "A Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Away",
+      "home": false,
+      "result": "Lost by 18 runs"
+    },
+    {
+      "date": "2026-10-31",
+      "time": "13:00",
+      "team": "A Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Evandale",
+      "home": true,
+      "result": "Won by 41 runs"
+    },
+    {
+      "date": "2026-11-07",
+      "time": "13:00",
+      "team": "A Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Away",
+      "home": false,
+      "result": ""
+    },
+    {
+      "date": "2026-11-14",
+      "time": "13:00",
+      "team": "A Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Evandale",
+      "home": true,
+      "result": ""
+    },
+    {
+      "date": "2026-10-17",
+      "time": "13:00",
+      "team": "B Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Away",
+      "home": false,
+      "result": "Won by 3 wkts"
+    },
+    {
+      "date": "2026-10-31",
+      "time": "13:00",
+      "team": "B Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Away",
+      "home": false,
+      "result": "Draw"
+    },
+    {
+      "date": "2026-11-07",
+      "time": "13:00",
+      "team": "B Grade",
+      "opponent": "Opponent TBC",
+      "venue": "Evandale",
+      "home": true,
+      "result": ""
+    },
+    {
+      "date": "2026-11-06",
+      "time": "17:30",
+      "team": "Juniors",
+      "opponent": "Opponent TBC",
+      "venue": "Evandale",
+      "home": true,
+      "result": ""
+    }
+  ]
+}

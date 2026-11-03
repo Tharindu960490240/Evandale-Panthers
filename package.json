@@ -1,0 +1,12 @@
+{
+  "name": "evandale-panthers-website",
+  "private": true,
+  "type": "module",
+  "description": "Evandale Panthers Cricket Club website with PlayHQ fixtures",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}

@@ -557,8 +557,14 @@ function renderContact() {
   if (c.email) rows.push(["Email", `<a href="mailto:${escapeHtml(c.email)}">${escapeHtml(c.email)}</a>`]);
   if (c.phone) rows.push(["Phone", `<a href="tel:${escapeHtml(c.phone.replace(/\s+/g, ""))}">${escapeHtml(c.phone)}</a>`]);
   const fb = safeUrl(c.facebook), ig = safeUrl(c.instagram), phq = safeUrl(c.playhq_url);
-  if (fb) rows.push(["Facebook", `<a href="${escapeHtml(fb)}" target="_blank" rel="noopener">${escapeHtml(fb.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, ""))}</a>`]);
-  if (ig) rows.push(["Instagram", `<a href="${escapeHtml(ig)}" target="_blank" rel="noopener">${escapeHtml(ig.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, ""))}</a>`]);
+  const ICONS = {
+    facebook: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21h3z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>',
+  };
+  const handle = (u) => u.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "");
+  const socials = [["facebook", fb, "Facebook"], ["instagram", ig, "Instagram"]].filter(([, u]) => u);
+  if (socials.length) rows.push(["Social media", `<ul class="socials">${socials.map(([k, u, label]) =>
+    `<li><a href="${escapeHtml(u)}" target="_blank" rel="noopener" aria-label="${label}" title="${label}">${ICONS[k]}</a></li>`).join("")}</ul>`]);
   if (phq) rows.push(["PlayHQ", `<a href="${escapeHtml(phq)}" target="_blank" rel="noopener">Club page on PlayHQ</a>`]);
   $("#contact-list").innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
 

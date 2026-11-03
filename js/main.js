@@ -13,8 +13,9 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const pad = (n) => String(n).padStart(2, "0");
 const DEFAULT_START = "13:00";
-const FIXTURES_PER_PAGE = 10;
-const PHOTOS_PER_PAGE = 8;
+const FIXTURES_FIRST = 10;  // shown at first
+const PHOTOS_FIRST = 8;
+const LOAD_MORE_STEP = 5;   // added each time "Load more" is clicked
 
 const state = {
   content: null,
@@ -23,8 +24,8 @@ const state = {
   fixtureSource: "manual",
   view: "upcoming",
   team: "All",
-  fixtureLimit: FIXTURES_PER_PAGE,
-  photoLimit: PHOTOS_PER_PAGE,
+  fixtureLimit: FIXTURES_FIRST,
+  photoLimit: PHOTOS_FIRST,
   countdownTimer: null,
 };
 
@@ -56,7 +57,7 @@ async function getJson(url, timeoutMs = 6000) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
-    const r = await fetch(url, { signal: ctrl.signal, headers: { accept: "application/json" } });
+    const r = await fetch(url, { signal: ctrl.signal, cache: "no-store", headers: { accept: "application/json" } });
     if (!r.ok) throw new Error(String(r.status));
     return await r.json();
   } finally {
@@ -114,6 +115,26 @@ function showSection(id, show) {
   if (sec) sec.hidden = !show;
   const link = $(`[data-nav="${id}"]`);
   if (link) link.hidden = !show;
+}
+
+/* ---------- back to top ---------- */
+function initScrollTop() {
+  const btn = $("#to-top");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const toTop = (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduce.matches ? "auto" : "smooth" });
+    history.replaceState(null, "", location.pathname + location.search);
+    // Move keyboard focus to the top so the next Tab starts from the menu
+    $(".brand").focus({ preventScroll: true });
+  };
+  $$("[data-scroll-top]").forEach((el) => el.addEventListener("click", toTop));
+
+  // Show the button once the visitor has scrolled past the top section
+  let ticking = false;
+  const update = () => { btn.hidden = window.scrollY < 600; ticking = false; };
+  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
 }
 
 /* ---------- scoreboard ---------- */
@@ -181,7 +202,8 @@ function renderFixtures() {
 
   const remaining = list.length - state.fixtureLimit;
   more.hidden = remaining <= 0;
-  more.textContent = `Load more ${state.view === "upcoming" ? "fixtures" : "results"} (${Math.max(remaining, 0)} more)`;
+  const n = Math.min(remaining, LOAD_MORE_STEP);
+  more.textContent = `Load ${n} more ${state.view === "upcoming" ? (n === 1 ? "fixture" : "fixtures") : (n === 1 ? "result" : "results")}`;
 
   body.innerHTML = list.slice(0, state.fixtureLimit).map((fx) => {
     const d = toDate(fx);
@@ -213,7 +235,7 @@ function initFixtureControls() {
     const btn = e.target.closest(".tab"); if (!btn) return;
     $$(".tab", tabs).forEach((t) => t.setAttribute("aria-pressed", String(t === btn)));
     state.team = btn.dataset.team;
-    state.fixtureLimit = FIXTURES_PER_PAGE;
+    state.fixtureLimit = FIXTURES_FIRST;
     renderFixtures();
   };
 
@@ -223,13 +245,13 @@ function initFixtureControls() {
     b.setAttribute("aria-pressed", String(b.dataset.view === state.view));
     b.onclick = () => {
       state.view = b.dataset.view;
-      state.fixtureLimit = FIXTURES_PER_PAGE;
+      state.fixtureLimit = FIXTURES_FIRST;
       $$(".seg[data-view]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       renderFixtures();
     };
   });
   $("#fixture-more").onclick = () => {
-    state.fixtureLimit += FIXTURES_PER_PAGE;
+    state.fixtureLimit += LOAD_MORE_STEP;
     renderFixtures();
   };
   renderFixtures();
@@ -305,9 +327,9 @@ function renderSquad() {
   //   yes           → full names and photos (only with parents' permission)
   const juniorMode = (() => {
     const v = String(club.show_junior_players || "").trim().toLowerCase();
-    if (/^(y|yes|true|full)$/.test(v)) return "full";
+    if (/^(n|no|false|hide|hidden)$/.test(v)) return "hidden";
     if (/first|initial/.test(v)) return "first";
-    return "hidden";
+    return "full"; // default: show junior players like everyone else
   })();
   const shortName = (n) => {
     const parts = String(n).trim().split(/\s+/);
@@ -480,8 +502,9 @@ function renderGallery() {
   el.classList.remove("is-empty");
   const remaining = items.length - state.photoLimit;
   more.hidden = remaining <= 0;
-  more.textContent = `Load more photos (${Math.max(remaining, 0)} more)`;
-  more.onclick = () => { state.photoLimit += PHOTOS_PER_PAGE; renderGallery(); };
+  const n = Math.min(remaining, LOAD_MORE_STEP);
+  more.textContent = `Load ${n} more ${n === 1 ? "photo" : "photos"}`;
+  more.onclick = () => { state.photoLimit += LOAD_MORE_STEP; renderGallery(); };
   el.innerHTML = items.slice(0, state.photoLimit).map((g, i) => `
     <figure class="shot">
       <button type="button" class="shot-btn" data-i="${i}" aria-label="Open photo${g.caption ? ": " + escapeHtml(g.caption) : ""}">
@@ -625,6 +648,7 @@ function emailFallback(data, status) {
 /* ---------- start ---------- */
 document.addEventListener("DOMContentLoaded", async () => {
   initNav();
+  initScrollTop();
   initJoinForm();
 
   state.content = await loadContent();

@@ -18,7 +18,7 @@
 
   <header class="site-header" id="top">
     <div class="wrap header-inner">
-      <a class="brand" href="#top" aria-label="Evandale Panthers home">
+      <a class="brand" href="#main" aria-label="Evandale Panthers – back to top" data-scroll-top>
         <img src="assets/logo.png" alt="" width="40" height="47">
         <span>Evandale Panthers</span>
       </a>
@@ -259,9 +259,13 @@
     <div class="wrap footer-inner">
       <img src="assets/logo.png" alt="" width="56" height="66">
       <p>Evandale Panthers Cricket Club<br><span>Go Panthers.</span></p>
-      <p class="footer-small">&copy; <span id="year"></span> Evandale Panthers CC · <a href="#top">Back to top</a></p>
+      <p class="footer-small">&copy; <span id="year"></span> Evandale Panthers CC · <a href="#main" data-scroll-top>Back to top</a></p>
     </div>
   </footer>
+
+  <button type="button" class="to-top" id="to-top" aria-label="Back to top" data-scroll-top hidden>
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5l-7 7m7-7l7 7M12 5v14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
 
   <script src="js/main.js" defer></script>
 </body>

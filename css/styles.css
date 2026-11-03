@@ -263,23 +263,18 @@ a:hover { color: var(--night); }
 
 /* ---------- Teams ---------- */
 .teams {
-  /* Lines only BETWEEN cards: a right line on every card except the last in
-     its row, and a top line on every row after the first. */
+  /* Horizontal lines between rows only – no side borders. */
   display: grid; grid-template-columns: repeat(3, 1fr);
   border-top: 2px solid var(--night);
 }
-.team { padding: 22px 24px; border-right: 1px solid #C9D0E6; }
-.team:nth-child(3n) { border-right: 0; }
+.team { padding: 22px 32px 22px 0; }
 .team:nth-child(n + 4) { border-top: 1px solid #C9D0E6; }
 @media (max-width: 900px) {
   .teams { grid-template-columns: repeat(2, 1fr); }
-  .team:nth-child(3n) { border-right: 1px solid #C9D0E6; }
-  .team:nth-child(2n) { border-right: 0; }
   .team:nth-child(n + 3) { border-top: 1px solid #C9D0E6; }
 }
 @media (max-width: 600px) {
   .teams { grid-template-columns: 1fr; }
-  .team, .team:nth-child(3n) { border-right: 0; padding: 20px 0; }
   .team:nth-child(n + 2) { border-top: 1px solid #C9D0E6; }
 }
 .team h3, .team h4 { margin: 0 0 6px; font-family: var(--display); font-weight: 900; font-size: 2rem; line-height: 1; color: var(--panther-blue); }
@@ -491,6 +486,20 @@ a.sponsor:hover { border-color: var(--panther-blue); color: var(--panther-blue);
   .ladder .hide-sm { display: none; }
   .player { border-radius: 999px 12px 12px 999px; }
 }
+
+/* ---------- Back to top ---------- */
+.to-top {
+  position: fixed; right: 20px; bottom: 20px; z-index: 40;
+  width: 52px; height: 52px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center;
+  background: var(--gold); color: var(--night);
+  box-shadow: 0 0 0 3px var(--night);
+  animation: to-top-in .2s ease-out;
+}
+.to-top:hover { background: #fff; }
+.to-top:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@keyframes to-top-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (max-width: 600px) { .to-top { right: 14px; bottom: 14px; width: 46px; height: 46px; } }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {

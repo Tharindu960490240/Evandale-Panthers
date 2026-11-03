@@ -11,7 +11,7 @@
     "playhq_url": "",
     "training": "",
     "registration_url": "",
-    "show_junior_players": "no"
+    "show_junior_players": "yes"
   },
   "teams": [
     {
@@ -199,6 +199,46 @@
       "role": "Keeper",
       "team": "Female Boom",
       "gender": "Women",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Junior One",
+      "role": "Batter",
+      "team": "U12s Division 2",
+      "gender": "",
+      "captain": "C",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Junior Two",
+      "role": "Bowler",
+      "team": "U12s Division 2",
+      "gender": "",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Junior Three",
+      "role": "All-rounder",
+      "team": "U12s Division 2",
+      "gender": "",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Junior Four",
+      "role": "Keeper",
+      "team": "U12s Division 2",
+      "gender": "",
       "captain": "",
       "photo": "",
       "note": "",

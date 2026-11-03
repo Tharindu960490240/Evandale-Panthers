@@ -13,6 +13,8 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const pad = (n) => String(n).padStart(2, "0");
 const DEFAULT_START = "13:00";
+const FIXTURES_PER_PAGE = 10;
+const PHOTOS_PER_PAGE = 8;
 
 const state = {
   content: null,
@@ -21,6 +23,8 @@ const state = {
   fixtureSource: "manual",
   view: "upcoming",
   team: "All",
+  fixtureLimit: FIXTURES_PER_PAGE,
+  photoLimit: PHOTOS_PER_PAGE,
   countdownTimer: null,
 };
 
@@ -166,14 +170,20 @@ function renderFixtures() {
     ? list.filter((fx) => !fx.result && toDate(fx) > now)
     : list.filter((fx) => fx.result || toDate(fx) <= now).slice().reverse();
   const nextFx = state.view === "upcoming" ? list.find((fx) => !isBye(fx)) : null;
+  const more = $("#fixture-more");
 
   if (!list.length) {
     const what = state.view === "upcoming" ? "upcoming matches" : "results yet";
     body.innerHTML = `<tr class="empty-row"><td colspan="5">No ${what}${state.team === "All" ? "" : " for " + escapeHtml(state.team)}.</td></tr>`;
+    more.hidden = true;
     return;
   }
 
-  body.innerHTML = list.map((fx) => {
+  const remaining = list.length - state.fixtureLimit;
+  more.hidden = remaining <= 0;
+  more.textContent = `Load more ${state.view === "upcoming" ? "fixtures" : "results"} (${Math.max(remaining, 0)} more)`;
+
+  body.innerHTML = list.slice(0, state.fixtureLimit).map((fx) => {
     const d = toDate(fx);
     const day = d.toLocaleDateString("en-AU", { day: "numeric", month: "short" });
     const sub = [fx.round, d.toLocaleDateString("en-AU", { weekday: "short" }),
@@ -203,19 +213,25 @@ function initFixtureControls() {
     const btn = e.target.closest(".tab"); if (!btn) return;
     $$(".tab", tabs).forEach((t) => t.setAttribute("aria-pressed", String(t === btn)));
     state.team = btn.dataset.team;
+    state.fixtureLimit = FIXTURES_PER_PAGE;
     renderFixtures();
   };
 
   // Start on Results if there's nothing upcoming
   if (!state.fixtures.some((fx) => isUpcoming(fx))) state.view = "results";
-  $$(".seg").forEach((b) => {
+  $$(".seg[data-view]").forEach((b) => {
     b.setAttribute("aria-pressed", String(b.dataset.view === state.view));
     b.onclick = () => {
       state.view = b.dataset.view;
-      $$(".seg").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      state.fixtureLimit = FIXTURES_PER_PAGE;
+      $$(".seg[data-view]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
       renderFixtures();
     };
   });
+  $("#fixture-more").onclick = () => {
+    state.fixtureLimit += FIXTURES_PER_PAGE;
+    renderFixtures();
+  };
   renderFixtures();
 }
 
@@ -283,20 +299,39 @@ function renderSquad() {
   const club = state.content.club || {};
   const teams = state.content.teams || [];
   const teamsByName = Object.fromEntries(teams.map((t) => [t.name, t]));
-  const showJuniors = /^(y|yes|true)$/i.test(club.show_junior_players || "");
+  // Junior privacy – Club tab "show_junior_players":
+  //   no (default)  → the junior team is listed, but not the children's names
+  //   first_names   → first name + surname initial, no photos (e.g. "Sam T.")
+  //   yes           → full names and photos (only with parents' permission)
+  const juniorMode = (() => {
+    const v = String(club.show_junior_players || "").trim().toLowerCase();
+    if (/^(y|yes|true|full)$/.test(v)) return "full";
+    if (/first|initial/.test(v)) return "first";
+    return "hidden";
+  })();
+  const shortName = (n) => {
+    const parts = String(n).trim().split(/\s+/);
+    return parts.length > 1 ? `${parts[0]} ${parts[parts.length - 1][0].toUpperCase()}.` : parts[0];
+  };
 
   const all = (state.content.squad || []).map((p) => ({ ...p, side: playerGender(p, teamsByName) }));
-  const hiddenJuniors = showJuniors ? 0 : all.filter((p) => isJuniorTeam(p.team)).length;
-  const squad = showJuniors ? all : all.filter((p) => !isJuniorTeam(p.team));
+  const squad = all
+    .filter((p) => !(juniorMode === "hidden" && isJuniorTeam(p.team)))
+    .map((p) => (juniorMode === "first" && isJuniorTeam(p.team) ? { ...p, name: shortName(p.name), photo: "" } : p));
 
-  showSection("squad", squad.length > 0);
-  if (!squad.length) return;
-  $("#squad-sample").hidden = !squad.some((p) => p.sample);
-  $("#squad-junior-note").hidden = hiddenJuniors === 0;
+  // Junior teams whose players aren't shown still get a group, so they don't look forgotten.
+  const privateTeams = juniorMode === "hidden"
+    ? [...new Set([...teams.map((t) => t.name), ...all.map((p) => p.team)].filter(isJuniorTeam))]
+    : [];
+
+  showSection("squad", squad.length + privateTeams.length > 0);
+  if (!squad.length && !privateTeams.length) return;
+  $("#squad-sample").hidden = !all.some((p) => p.sample);
+  $("#squad-junior-note").hidden = true;
 
   // Team order follows the Teams list; unknown teams go last.
   const order = teams.map((t) => t.name);
-  const teamNames = [...new Set(squad.map((p) => p.team || "Other"))]
+  const teamNames = [...new Set([...squad.map((p) => p.team || "Other"), ...privateTeams])]
     .sort((a, b) => (order.indexOf(a) + 1 || 999) - (order.indexOf(b) + 1 || 999));
   const sides = ["Men", "Women"].filter((g) => squad.some((p) => p.side === g));
   const roles = new Set(squad.map((p) => p.role));
@@ -314,6 +349,7 @@ function renderSquad() {
   const teamTabs = $("#squad-tabs");
   const drawTeamTabs = () => {
     const visible = teamNames.filter((t) => f.side === "All" || squad.some((p) => p.team === t && p.side === f.side));
+    // (private junior teams only appear under "Everyone")
     if (f.team !== "All" && !visible.includes(f.team)) f.team = "All";
     teamTabs.innerHTML = visible.length > 1
       ? ["All", ...visible].map((t) => `<button type="button" class="tab" data-team="${escapeHtml(t)}" aria-pressed="${t === f.team}">${escapeHtml(t === "All" ? "All teams" : t)}</button>`).join("")
@@ -344,10 +380,24 @@ function renderSquad() {
     const rank = (p) => (p.captain === "C" ? 0 : p.captain === "VC" ? 1 : 2);
     list.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name));
 
-    const groups = teamNames.map((t) => [t, list.filter((p) => (p.team || "Other") === t)]).filter(([, ps]) => ps.length);
+    const showPrivate = (t) => privateTeams.includes(t) && f.side === "All" && f.role === "All" && (f.team === "All" || f.team === t);
+    const groups = teamNames
+      .map((t) => [t, list.filter((p) => (p.team || "Other") === t)])
+      .filter(([t, ps]) => ps.length || showPrivate(t));
     $("#squad-list").innerHTML = groups.length
       ? groups.map(([t, ps]) => {
           const info = teamsByName[t] || {};
+          if (!ps.length) {
+            const contact = club.email ? ` <a href="mailto:${escapeHtml(club.email)}">Contact the club</a> to find out about joining.` : "";
+            return `
+          <section class="squad-group">
+            <h3 class="squad-team">${escapeHtml(t)}${info.competition ? `<small>${escapeHtml(info.competition)}</small>` : ""}</h3>
+            <div class="squad-private">
+              <img src="assets/crest.png" alt="" width="44">
+              <p>Our junior players aren't named online to protect their privacy.${contact}</p>
+            </div>
+          </section>`;
+          }
           return `
           <section class="squad-group">
             <h3 class="squad-team">${escapeHtml(t)}${info.competition ? `<small>${escapeHtml(info.competition)}</small>` : ""}<span class="count">${ps.length} ${ps.length === 1 ? "player" : "players"}</span></h3>
@@ -415,7 +465,9 @@ function renderGallery() {
   const items = (state.content.gallery || []).filter((g) => safeUrl(g.image));
   const el = $("#gallery-list");
   const fb = safeUrl(state.content.club.facebook);
+  const more = $("#gallery-more");
   if (!items.length) {
+    more.hidden = true;
     el.classList.add("is-empty");
     el.innerHTML = `
       <div class="gallery-empty">
@@ -426,7 +478,11 @@ function renderGallery() {
     return;
   }
   el.classList.remove("is-empty");
-  el.innerHTML = items.slice(0, 12).map((g, i) => `
+  const remaining = items.length - state.photoLimit;
+  more.hidden = remaining <= 0;
+  more.textContent = `Load more photos (${Math.max(remaining, 0)} more)`;
+  more.onclick = () => { state.photoLimit += PHOTOS_PER_PAGE; renderGallery(); };
+  el.innerHTML = items.slice(0, state.photoLimit).map((g, i) => `
     <figure class="shot">
       <button type="button" class="shot-btn" data-i="${i}" aria-label="Open photo${g.caption ? ": " + escapeHtml(g.caption) : ""}">
         <img src="${escapeHtml(safeUrl(g.image))}" alt="${escapeHtml(g.caption)}" loading="lazy">

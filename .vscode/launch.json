@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Website – demo data",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/dev-server.mjs",
+      "args": ["--demo"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Website – real data (.env.local)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/dev-server.mjs",
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -262,9 +262,26 @@ a:hover { color: var(--night); }
 .empty-row td { text-align: center; color: var(--muted); padding: 32px; }
 
 /* ---------- Teams ---------- */
-.teams { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border-top: 2px solid var(--night); }
-.team { padding: 24px 24px 24px 0; border-bottom: 1px solid #C9D0E6; }
-.team + .team { padding-left: 24px; border-left: 1px solid #C9D0E6; }
+.teams {
+  /* Lines only BETWEEN cards: a right line on every card except the last in
+     its row, and a top line on every row after the first. */
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 2px solid var(--night);
+}
+.team { padding: 22px 24px; border-right: 1px solid #C9D0E6; }
+.team:nth-child(3n) { border-right: 0; }
+.team:nth-child(n + 4) { border-top: 1px solid #C9D0E6; }
+@media (max-width: 900px) {
+  .teams { grid-template-columns: repeat(2, 1fr); }
+  .team:nth-child(3n) { border-right: 1px solid #C9D0E6; }
+  .team:nth-child(2n) { border-right: 0; }
+  .team:nth-child(n + 3) { border-top: 1px solid #C9D0E6; }
+}
+@media (max-width: 600px) {
+  .teams { grid-template-columns: 1fr; }
+  .team, .team:nth-child(3n) { border-right: 0; padding: 20px 0; }
+  .team:nth-child(n + 2) { border-top: 1px solid #C9D0E6; }
+}
 .team h3, .team h4 { margin: 0 0 6px; font-family: var(--display); font-weight: 900; font-size: 2rem; line-height: 1; color: var(--panther-blue); }
 .team p { margin: 0 0 14px; color: var(--muted); }
 .team dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: .95rem; }
@@ -383,6 +400,10 @@ a.sponsor:hover { border-color: var(--panther-blue); color: var(--panther-blue);
 .squad-team small { font-family: var(--body); font-weight: 600; font-size: .9rem; color: var(--muted); }
 .squad-team .count { margin-left: auto; font-family: var(--body); font-weight: 600; font-size: .85rem; color: var(--muted); }
 .squad-empty { color: var(--muted); padding: 24px 0; }
+.squad-private { display: flex; align-items: center; gap: 14px; background: #fff; border: 2px dashed #9AA6CF; border-radius: var(--radius-lg); padding: 16px 20px; max-width: 640px; }
+.squad-private img { width: 44px; flex: none; }
+.squad-private p { margin: 0; color: var(--muted); }
+.squad-private a { font-weight: 600; }
 .team-comp { font-weight: 600; font-size: .9rem; color: var(--muted); margin: -2px 0 8px !important; }
 
 /* ---------- Club: teams sub-section ---------- */
@@ -416,6 +437,10 @@ a.sponsor:hover { border-color: var(--panther-blue); color: var(--panther-blue);
 .gallery-empty img { width: 80px; }
 .gallery-empty p { margin: 0; flex: 1 1 280px; max-width: 52ch; }
 .btn-dark { background: var(--night); color: #fff; }
+.btn-outline { background: transparent; color: var(--night); border: 2px solid var(--night); cursor: pointer; font-family: var(--body); }
+.btn-outline:hover { background: var(--night); color: #fff; }
+.load-more { display: flex; justify-content: center; margin-top: 20px; }
+.load-more:has(> [hidden]) { display: none; }
 .btn-dark:hover { background: var(--panther-blue); color: #fff; }
 .lightbox { border: 0; padding: 0; background: transparent; max-width: min(1100px, 94vw); }
 .lightbox::backdrop { background: rgba(5,10,38,.88); }
@@ -491,7 +516,6 @@ a.sponsor:hover { border-color: var(--panther-blue); color: var(--panther-blue);
   .site-nav a { padding: 14px 4px; border-bottom: 1px solid #1E2856; border-radius: 0; }
   .site-nav .nav-cta { margin: 12px 0 0; text-align: center; border-radius: var(--radius-sm); border: 0; }
 
-  .team, .team + .team { padding: 20px 0; border-left: 0; }
 
   /* Fixture table becomes stacked rows */
   .fixture-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

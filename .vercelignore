@@ -1,3 +1,5 @@
 docs
+scripts
+.vscode
 .env*
 !.env.example

@@ -79,9 +79,12 @@ Changes in the sheet show on the site within about 5 minutes.
   On the site, players are grouped by team and can be filtered by team,
   men's/women's and role.
 
-**Junior players:** players in junior teams (U12s etc.) are hidden from the
-website unless the Club tab has `show_junior_players` = `yes`. Only switch it on
-with parents' permission.
+**Junior players (U12s):** set `show_junior_players` in the Club tab:
+- `no` (default) – the U12s team appears in the squad with a privacy message, no names
+- `first_names` – first name + surname initial only (e.g. "Sam T."), no photos
+- `yes` – full names and photos
+
+Only use `first_names` or `yes` with parents' permission.
 - **News** – `date | title | summary | link | image`. Newest shows first.
   Dates like `3/11/2026` or `2026-11-03` both work.
 - **Gallery** – `image | caption`
@@ -118,10 +121,29 @@ Until this is set up, the form offers to email the club's address instead.
 
 Never put API keys or secrets in the code or the sheet – only in Vercel.
 
-## Run locally
-```
-npm i -g vercel
-cp .env.example .env.local    # fill in what you have
-vercel dev
-```
-Without Vercel: `python3 -m http.server` (uses the backup content only).
+## Run and test in VS Code
+You need **Node.js 18 or newer** (nodejs.org → LTS). No other installs.
+
+1. Unzip the folder, then in VS Code: **File → Open Folder** → `evandale-panthers`.
+2. Open the terminal: **Terminal → New Terminal**.
+3. Run one of these:
+
+| Command | What you get |
+|---|---|
+| `npm run demo` | Every section working with **fake** data – fixtures, results, ladder, squad, news, join form. Best for testing the look and features. |
+| `npm run dev` | **Real** mode. Uses settings in `.env.local`; anything not set uses `data/content.json`. |
+
+4. Open **http://localhost:3000** in your browser.
+5. Edit any file, save, and refresh the browser to see the change.
+6. Stop the server with **Ctrl + C** in the terminal.
+
+You can also use VS Code's **Run and Debug** panel (Ctrl + Shift + D) and pick
+"Website – demo data" or "Website – real data".
+
+**Testing with real data:** copy `.env.example` to `.env.local`, fill in what
+you have (PlayHQ key and org ID, Google Sheet ID, join webhook), then
+`npm run dev`. The terminal shows which ones are connected.
+`.env.local` is never uploaded (it's in `.gitignore`).
+
+If port 3000 is busy: `PORT=3005 npm run demo` (Mac/Linux) or
+`$env:PORT=3005; npm run demo` (Windows PowerShell).

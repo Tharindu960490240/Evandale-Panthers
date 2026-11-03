@@ -336,7 +336,11 @@ function renderSquad() {
     return parts.length > 1 ? `${parts[0]} ${parts[parts.length - 1][0].toUpperCase()}.` : parts[0];
   };
 
-  const all = (state.content.squad || []).map((p) => ({ ...p, side: playerGender(p, teamsByName) }));
+  // Each player sits in one group for the Everyone / Men's / Women's / Juniors filter.
+  // Junior teams (U12s etc.) always go under Juniors, whatever their gender.
+  const all = (state.content.squad || []).map((p) => ({
+    ...p, side: isJuniorTeam(p.team) ? "Juniors" : playerGender(p, teamsByName),
+  }));
   const squad = all
     .filter((p) => !(juniorMode === "hidden" && isJuniorTeam(p.team)))
     .map((p) => (juniorMode === "first" && isJuniorTeam(p.team) ? { ...p, name: shortName(p.name), photo: "" } : p));
@@ -355,13 +359,15 @@ function renderSquad() {
   const order = teams.map((t) => t.name);
   const teamNames = [...new Set([...squad.map((p) => p.team || "Other"), ...privateTeams])]
     .sort((a, b) => (order.indexOf(a) + 1 || 999) - (order.indexOf(b) + 1 || 999));
-  const sides = ["Men", "Women"].filter((g) => squad.some((p) => p.side === g));
+  const SIDE_LABELS = { All: "Everyone", Men: "Men's", Women: "Women's", Juniors: "Juniors" };
+  const sides = ["Men", "Women", "Juniors"].filter((g) =>
+    squad.some((p) => p.side === g) || (g === "Juniors" && privateTeams.length));
   const roles = new Set(squad.map((p) => p.role));
 
   const f = { team: "All", side: "All", role: "All" };
 
   $("#squad-side").innerHTML = sides.length > 1
-    ? ["All", ...sides].map((g) => `<button type="button" class="seg" data-side="${g}" aria-pressed="${g === "All"}">${g === "All" ? "Everyone" : g === "Men" ? "Men's" : "Women's"}</button>`).join("")
+    ? ["All", ...sides].map((g) => `<button type="button" class="seg" data-side="${g}" aria-pressed="${g === "All"}">${SIDE_LABELS[g]}</button>`).join("")
     : "";
   $("#squad-side").hidden = sides.length < 2;
 
@@ -370,7 +376,8 @@ function renderSquad() {
 
   const teamTabs = $("#squad-tabs");
   const drawTeamTabs = () => {
-    const visible = teamNames.filter((t) => f.side === "All" || squad.some((p) => p.team === t && p.side === f.side));
+    const visible = teamNames.filter((t) => f.side === "All" || squad.some((p) => p.team === t && p.side === f.side) ||
+      (f.side === "Juniors" && privateTeams.includes(t)));
     // (private junior teams only appear under "Everyone")
     if (f.team !== "All" && !visible.includes(f.team)) f.team = "All";
     teamTabs.innerHTML = visible.length > 1
@@ -402,7 +409,7 @@ function renderSquad() {
     const rank = (p) => (p.captain === "C" ? 0 : p.captain === "VC" ? 1 : 2);
     list.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name));
 
-    const showPrivate = (t) => privateTeams.includes(t) && f.side === "All" && f.role === "All" && (f.team === "All" || f.team === t);
+    const showPrivate = (t) => privateTeams.includes(t) && (f.side === "All" || f.side === "Juniors") && f.role === "All" && (f.team === "All" || f.team === t);
     const groups = teamNames
       .map((t) => [t, list.filter((p) => (p.team || "Other") === t)])
       .filter(([t, ps]) => ps.length || showPrivate(t));

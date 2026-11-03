@@ -1,272 +1,541 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Evandale Panthers Cricket Club</title>
-  <meta name="description" content="Evandale Panthers Cricket Club – community cricket in Evandale, Tasmania. Fixtures, results, ladder, squad and how to join.">
-  <meta name="theme-color" content="#1B33AD">
-  <meta property="og:title" content="Evandale Panthers Cricket Club">
-  <meta property="og:description" content="Community cricket in Evandale. Fixtures, results, ladder, squad and how to join.">
-  <meta property="og:image" content="assets/logo.png">
-  <link rel="icon" href="assets/logo.png">
-  <link rel="preload" href="assets/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evandale Panthers Cricket Club</title>
+    <meta
+      name="description"
+      content="Evandale Panthers Cricket Club – community cricket in Evandale, Tasmania. Fixtures, results, ladder, squad and how to join."
+    />
+    <meta name="theme-color" content="#1B33AD" />
+    <meta property="og:title" content="Evandale Panthers Cricket Club" />
+    <meta
+      property="og:description"
+      content="Community cricket in Evandale. Fixtures, results, ladder, squad and how to join."
+    />
+    <meta property="og:image" content="assets/logo.png" />
+    <link rel="icon" href="assets/logo.png" />
+    <link
+      rel="preload"
+      href="assets/fonts/big-shoulders-display-latin-900-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="top">
-    <div class="wrap header-inner">
-      <a class="brand" href="#main" aria-label="Evandale Panthers – back to top" data-scroll-top>
-        <img src="assets/logo.png" alt="" width="40" height="47">
-        <span>Evandale Panthers</span>
-      </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="visually-hidden">Menu</span>
-      </button>
-      <nav id="site-nav" class="site-nav" aria-label="Main">
-        <a href="#fixtures">Fixtures</a>
-        <a href="#ladder" data-nav="ladder">Ladder</a>
-        <a href="#squad" data-nav="squad">Squad</a>
-        <a href="#club">The club</a>
-        <a href="#news" data-nav="news">News</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
-        <a class="nav-cta" href="#join">Join us</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-bats" aria-hidden="true"></div>
-      <div class="wrap hero-inner">
-        <div class="hero-copy">
-          <p class="hero-place">Evandale, Tasmania</p>
-          <h1 class="hero-title">
-            <span class="hero-title-sm">Evandale</span>
-            <span class="hero-title-lg">Panthers</span>
-            <span class="hero-title-sm">Cricket Club</span>
-          </h1>
-          <p class="hero-lede">Country cricket with a big heart. Senior grades, juniors and a club that looks after its own, on and off the field.</p>
-          <div class="hero-actions">
-            <a class="btn btn-gold" href="#join">Join the club</a>
-            <a class="btn btn-ghost" href="#fixtures">See fixtures</a>
-          </div>
-        </div>
-        <div class="hero-logo">
-          <img src="assets/crest.png" alt="Evandale Panthers Cricket Club crest: a black panther over crossed bats with gold ribbons" width="482" height="566">
-        </div>
+    <header class="site-header" id="top">
+      <div class="wrap header-inner">
+        <a
+          class="brand"
+          href="#main"
+          aria-label="Evandale Panthers – back to top"
+          data-scroll-top
+        >
+          <img src="assets/logo.png" alt="" width="40" height="47" />
+          <span>Evandale Panthers</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="visually-hidden">Menu</span>
+        </button>
+        <nav id="site-nav" class="site-nav" aria-label="Main">
+          <a href="#fixtures">Fixtures</a>
+          <a href="#ladder" data-nav="ladder">Ladder</a>
+          <a href="#squad" data-nav="squad">Squad</a>
+          <a href="#club">The club</a>
+          <a href="#news" data-nav="news">News</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+          <a class="nav-cta" href="#join">Join us</a>
+        </nav>
       </div>
+    </header>
 
-      <!-- Scoreboard: next match -->
-      <div class="wrap">
-        <div class="scoreboard" aria-live="polite">
-          <div class="sb-head">
-            <span class="sb-label">Next match</span>
-            <span class="sb-team" id="sb-team">—</span>
-          </div>
-          <div class="sb-match">
-            <span class="sb-vs" id="sb-vs">Loading draw…</span>
-            <span class="sb-meta" id="sb-meta"></span>
-          </div>
-          <div class="sb-count" id="sb-count">
-            <div class="sb-cell"><span class="sb-num" data-unit="days">00</span><span class="sb-unit">Days</span></div>
-            <div class="sb-cell"><span class="sb-num" data-unit="hours">00</span><span class="sb-unit">Hrs</span></div>
-            <div class="sb-cell"><span class="sb-num" data-unit="mins">00</span><span class="sb-unit">Min</span></div>
-            <div class="sb-cell"><span class="sb-num" data-unit="secs">00</span><span class="sb-unit">Sec</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FIXTURES & RESULTS -->
-    <section class="section section-tint" id="fixtures">
-      <div class="wrap">
-        <div class="section-head">
-          <h2 class="ribbon">Fixtures &amp; results</h2>
-          <div class="controls">
-            <div class="segmented" role="group" aria-label="Show">
-              <button type="button" class="seg" data-view="upcoming" aria-pressed="true">Upcoming</button>
-              <button type="button" class="seg" data-view="results" aria-pressed="false">Results</button>
+    <main id="main">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-bats" aria-hidden="true"></div>
+        <div class="wrap hero-inner">
+          <div class="hero-copy">
+            <p class="hero-place">Evandale, Tasmania</p>
+            <h1 class="hero-title">
+              <span class="hero-title-sm">Evandale</span>
+              <span class="hero-title-lg">Panthers</span>
+              <span class="hero-title-sm">Cricket Club</span>
+            </h1>
+            <p class="hero-lede">
+              Country cricket with a big heart. Senior grades, juniors and a
+              club that looks after its own, on and off the field.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-gold" href="#join">Join the club</a>
+              <a class="btn btn-ghost" href="#fixtures">See fixtures</a>
             </div>
-            <div class="tabs" role="group" aria-label="Filter by team" id="fixture-tabs"></div>
+          </div>
+          <div class="hero-logo">
+            <img
+              src="assets/crest.png"
+              alt="Evandale Panthers Cricket Club crest: a black panther over crossed bats with gold ribbons"
+              width="482"
+              height="566"
+            />
           </div>
         </div>
-        <div class="fixture-table-wrap">
-          <table class="fixture-table">
-            <thead>
-              <tr><th scope="col">Date</th><th scope="col">Team</th><th scope="col">Opponent</th><th scope="col">Venue</th><th scope="col">Result</th></tr>
-            </thead>
-            <tbody id="fixture-body"><tr class="empty-row"><td colspan="5">Loading fixtures…</td></tr></tbody>
-          </table>
-        </div>
-        <div class="load-more"><button type="button" class="btn btn-outline" id="fixture-more" hidden>Load more</button></div>
-        <p class="fine-print" id="fixture-source">Loading fixtures…</p>
-      </div>
-    </section>
 
-    <!-- LADDER (shown when PlayHQ provides one) -->
-    <section class="section" id="ladder" hidden>
-      <div class="wrap">
-        <div class="section-head">
-          <h2 class="ribbon">Ladder</h2>
-          <div class="tabs" role="group" aria-label="Choose grade" id="ladder-tabs"></div>
-        </div>
-        <div id="ladder-body"></div>
-        <p class="fine-print">Live from PlayHQ. P played, W won, L lost, D drawn, Pts competition points.</p>
-      </div>
-    </section>
-
-    <!-- SQUAD -->
-    <section class="section section-tint" id="squad" hidden>
-      <div class="wrap">
-        <h2 class="ribbon">The squad</h2>
-        <div class="squad-filters">
-          <div class="segmented" role="group" aria-label="Men's or women's" id="squad-side"></div>
-          <label class="select-label">
-            <span class="visually-hidden">Filter by role</span>
-            <select id="squad-role"></select>
-          </label>
-        </div>
-        <div class="tabs" role="group" aria-label="Filter by team" id="squad-tabs"></div>
-        <p class="sample-note" id="squad-sample" hidden>These are example players. Add the real squad in the club's Google Sheet.</p>
-        <div id="squad-list"></div>
-        <p class="fine-print" id="squad-junior-note" hidden>Junior players aren't listed online to protect their privacy.</p>
-      </div>
-    </section>
-
-    <!-- CLUB -->
-    <section class="section" id="club">
-      <div class="wrap club-grid">
-        <div>
-          <h2 class="ribbon">The club</h2>
-          <p class="lead">The Panthers are Evandale's home for cricket. We field senior sides on Saturdays, run junior cricket for kids learning the game, and keep the clubrooms open for everyone who wants to be part of it.</p>
-          <p>Whether you've played for years, haven't picked up a bat since school, or just want to help out on game day, there's a spot for you. New players, families, scorers, umpires and volunteers are always welcome.</p>
-        </div>
-        <ul class="offer-list">
-          <li><strong>Senior cricket</strong><span>Competitive and social grades every Saturday through the summer.</span></li>
-          <li><strong>Junior cricket</strong><span>Skills, games and a safe, encouraging start for young players.</span></li>
-          <li><strong>Club life</strong><span>Presentation night, family days and a drink after stumps.</span></li>
-          <li><strong>Get involved</strong><span>Score, umpire, coach, run the BBQ or help with the ground.</span></li>
-        </ul>
-      </div>
-      <div class="wrap">
-        <h3 class="sub-head" id="teams">Teams &amp; training</h3>
-        <div class="teams" id="teams-list"></div>
-      </div>
-    </section>
-
-    <!-- NEWS -->
-    <section class="section section-tint" id="news" hidden>
-      <div class="wrap">
-        <h2 class="ribbon">Club news</h2>
-        <div class="news" id="news-list"></div>
-      </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="section" id="gallery">
-      <div class="wrap">
-        <h2 class="ribbon">Gallery</h2>
-        <div class="gallery" id="gallery-list"></div>
-        <div class="load-more"><button type="button" class="btn btn-outline" id="gallery-more" hidden>Load more photos</button></div>
-      </div>
-    </section>
-
-    <!-- JOIN -->
-    <section class="section section-blue" id="join">
-      <div class="wrap join-grid">
-        <div>
-          <h2 class="ribbon ribbon-on-blue">Join the Panthers</h2>
-          <p class="lead">No trials and no pressure. Come down, have a hit, and meet the club.</p>
-          <ol class="steps">
-            <li><strong>Send your details</strong><span>Fill in the form and someone from the club will get back to you.</span></li>
-            <li><strong>Come to training</strong><span id="join-training">Turn up with sneakers and water. We have club gear to borrow.</span></li>
-            <li><strong>Register</strong><span id="join-register">Once you're keen, we'll help you register through PlayHQ.</span></li>
-          </ol>
-        </div>
-
-        <form class="join-form" id="join-form" novalidate>
-          <div class="field">
-            <label for="jf-name">Name</label>
-            <input id="jf-name" name="name" type="text" autocomplete="name" required>
-            <p class="field-error" id="jf-name-error"></p>
+        <!-- Scoreboard: next match -->
+        <div class="wrap">
+          <div class="scoreboard" aria-live="polite">
+            <div class="sb-head">
+              <span class="sb-label">Next match</span>
+              <span class="sb-team" id="sb-team">—</span>
+            </div>
+            <div class="sb-match">
+              <span class="sb-vs" id="sb-vs">Loading draw…</span>
+              <span class="sb-meta" id="sb-meta"></span>
+            </div>
+            <div class="sb-count" id="sb-count">
+              <div class="sb-cell">
+                <span class="sb-num" data-unit="days">00</span
+                ><span class="sb-unit">Days</span>
+              </div>
+              <div class="sb-cell">
+                <span class="sb-num" data-unit="hours">00</span
+                ><span class="sb-unit">Hrs</span>
+              </div>
+              <div class="sb-cell">
+                <span class="sb-num" data-unit="mins">00</span
+                ><span class="sb-unit">Min</span>
+              </div>
+              <div class="sb-cell">
+                <span class="sb-num" data-unit="secs">00</span
+                ><span class="sb-unit">Sec</span>
+              </div>
+            </div>
           </div>
-          <div class="field-row">
+        </div>
+      </section>
+
+      <!-- FIXTURES & RESULTS -->
+      <section class="section section-tint" id="fixtures">
+        <div class="wrap">
+          <div class="section-head">
+            <h2 class="ribbon">Fixtures &amp; results</h2>
+            <div class="controls">
+              <div class="segmented" role="group" aria-label="Show">
+                <button
+                  type="button"
+                  class="seg"
+                  data-view="upcoming"
+                  aria-pressed="true"
+                >
+                  Upcoming
+                </button>
+                <button
+                  type="button"
+                  class="seg"
+                  data-view="results"
+                  aria-pressed="false"
+                >
+                  Results
+                </button>
+              </div>
+              <div
+                class="tabs"
+                role="group"
+                aria-label="Filter by team"
+                id="fixture-tabs"
+              ></div>
+            </div>
+          </div>
+          <div class="fixture-table-wrap">
+            <table class="fixture-table">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Team</th>
+                  <th scope="col">Opponent</th>
+                  <th scope="col">Venue</th>
+                  <th scope="col">Result</th>
+                </tr>
+              </thead>
+              <tbody id="fixture-body">
+                <tr class="empty-row">
+                  <td colspan="5">Loading fixtures…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="load-more">
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="fixture-more"
+              hidden
+            >
+              Load more
+            </button>
+          </div>
+          <p class="fine-print" id="fixture-source">Loading fixtures…</p>
+        </div>
+      </section>
+
+      <!-- LADDER (shown when PlayHQ provides one) -->
+      <section class="section" id="ladder" hidden>
+        <div class="wrap">
+          <div class="section-head">
+            <h2 class="ribbon">Ladder</h2>
+            <div
+              class="tabs"
+              role="group"
+              aria-label="Choose grade"
+              id="ladder-tabs"
+            ></div>
+          </div>
+          <div id="ladder-body"></div>
+          <p class="fine-print">
+            Live from PlayHQ. P played, W won, L lost, D drawn, Pts competition
+            points.
+          </p>
+        </div>
+      </section>
+
+      <!-- SQUAD -->
+      <section class="section section-tint" id="squad" hidden>
+        <div class="wrap">
+          <h2 class="ribbon">The squad</h2>
+          <div class="squad-filters">
+            <div
+              class="segmented"
+              role="group"
+              aria-label="Men's or women's"
+              id="squad-side"
+            ></div>
+            <label class="select-label">
+              <span class="visually-hidden">Filter by role</span>
+              <select id="squad-role"></select>
+            </label>
+          </div>
+          <div
+            class="tabs"
+            role="group"
+            aria-label="Filter by team"
+            id="squad-tabs"
+          ></div>
+          <p class="sample-note" id="squad-sample" hidden>
+            These are example players. Add the real squad in the club's Google
+            Sheet.
+          </p>
+          <div id="squad-list"></div>
+          <p class="fine-print" id="squad-junior-note" hidden>
+            Junior players aren't listed online to protect their privacy.
+          </p>
+        </div>
+      </section>
+
+      <!-- CLUB -->
+      <section class="section" id="club">
+        <div class="wrap club-grid">
+          <div>
+            <h2 class="ribbon">The club</h2>
+            <p class="lead">
+              The Panthers are Evandale's home for cricket. We field senior
+              sides on Saturdays, run junior cricket for kids learning the game,
+              and keep the clubrooms open for everyone who wants to be part of
+              it.
+            </p>
+            <p>
+              Whether you've played for years, haven't picked up a bat since
+              school, or just want to help out on game day, there's a spot for
+              you. New players, families, scorers, umpires and volunteers are
+              always welcome.
+            </p>
+          </div>
+          <ul class="offer-list">
+            <li>
+              <strong>Senior cricket</strong
+              ><span
+                >Competitive and social grades every Saturday through the
+                summer.</span
+              >
+            </li>
+            <li>
+              <strong>Junior cricket</strong
+              ><span
+                >Skills, games and a safe, encouraging start for young
+                players.</span
+              >
+            </li>
+            <li>
+              <strong>Club life</strong
+              ><span
+                >Presentation night, family days and a drink after stumps.</span
+              >
+            </li>
+            <li>
+              <strong>Get involved</strong
+              ><span
+                >Score, umpire, coach, run the BBQ or help with the
+                ground.</span
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="wrap">
+          <h3 class="sub-head" id="teams">Teams &amp; training</h3>
+          <div class="teams" id="teams-list"></div>
+        </div>
+      </section>
+
+      <!-- NEWS -->
+      <section class="section section-tint" id="news" hidden>
+        <div class="wrap">
+          <h2 class="ribbon">Club news</h2>
+          <div class="news" id="news-list"></div>
+        </div>
+      </section>
+
+      <!-- GALLERY -->
+      <section class="section" id="gallery">
+        <div class="wrap">
+          <h2 class="ribbon">Gallery</h2>
+          <div class="gallery" id="gallery-list"></div>
+          <div class="load-more">
+            <button
+              type="button"
+              class="btn btn-outline"
+              id="gallery-more"
+              hidden
+            >
+              Load more photos
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- JOIN -->
+      <section class="section section-blue" id="join">
+        <div class="wrap join-grid">
+          <div>
+            <h2 class="ribbon ribbon-on-blue">Join the Panthers</h2>
+            <p class="lead">
+              No trials and no pressure. Come down, have a hit, and meet the
+              club.
+            </p>
+            <ol class="steps">
+              <li>
+                <strong>Send your details</strong
+                ><span
+                  >Fill in the form and someone from the club will get back to
+                  you.</span
+                >
+              </li>
+              <li>
+                <strong>Come to training</strong
+                ><span id="join-training"
+                  >Turn up with sneakers and water. We have club gear to
+                  borrow.</span
+                >
+              </li>
+              <li>
+                <strong>Register</strong
+                ><span id="join-register"
+                  >Once you're keen, we'll help you register through
+                  PlayHQ.</span
+                >
+              </li>
+            </ol>
+          </div>
+
+          <form class="join-form" id="join-form" novalidate>
             <div class="field">
-              <label for="jf-email">Email</label>
-              <input id="jf-email" name="email" type="email" autocomplete="email" required>
-              <p class="field-error" id="jf-email-error"></p>
+              <label for="jf-name">Name</label>
+              <input
+                id="jf-name"
+                name="name"
+                type="text"
+                autocomplete="name"
+                required
+              />
+              <p class="field-error" id="jf-name-error"></p>
             </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="jf-email">Email</label>
+                <input
+                  id="jf-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+                <p class="field-error" id="jf-email-error"></p>
+              </div>
+              <div class="field">
+                <label for="jf-phone"
+                  >Phone <span class="optional">(optional)</span></label
+                >
+                <input
+                  id="jf-phone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                />
+              </div>
+            </div>
+            <fieldset class="field">
+              <legend>I'm interested in</legend>
+              <div class="checks">
+                <label
+                  ><input
+                    type="checkbox"
+                    name="interests"
+                    value="Senior cricket"
+                  />
+                  Senior cricket</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="interests"
+                    value="Junior cricket"
+                  />
+                  Junior cricket</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="interests"
+                    value="Social cricket"
+                  />
+                  Social cricket</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="interests"
+                    value="Coaching or umpiring"
+                  />
+                  Coaching or umpiring</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="interests"
+                    value="Volunteering"
+                  />
+                  Volunteering</label
+                >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="interests"
+                    value="Sponsorship"
+                  />
+                  Sponsorship</label
+                >
+              </div>
+            </fieldset>
             <div class="field">
-              <label for="jf-phone">Phone <span class="optional">(optional)</span></label>
-              <input id="jf-phone" name="phone" type="tel" autocomplete="tel">
+              <label for="jf-message"
+                >Anything we should know?
+                <span class="optional">(optional)</span></label
+              >
+              <textarea id="jf-message" name="message" rows="3"></textarea>
             </div>
-          </div>
-          <fieldset class="field">
-            <legend>I'm interested in</legend>
-            <div class="checks">
-              <label><input type="checkbox" name="interests" value="Senior cricket"> Senior cricket</label>
-              <label><input type="checkbox" name="interests" value="Junior cricket"> Junior cricket</label>
-              <label><input type="checkbox" name="interests" value="Social cricket"> Social cricket</label>
-              <label><input type="checkbox" name="interests" value="Coaching or umpiring"> Coaching or umpiring</label>
-              <label><input type="checkbox" name="interests" value="Volunteering"> Volunteering</label>
-              <label><input type="checkbox" name="interests" value="Sponsorship"> Sponsorship</label>
+            <div class="hp" aria-hidden="true">
+              <label for="jf-website">Leave this empty</label>
+              <input
+                id="jf-website"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
             </div>
-          </fieldset>
-          <div class="field">
-            <label for="jf-message">Anything we should know? <span class="optional">(optional)</span></label>
-            <textarea id="jf-message" name="message" rows="3"></textarea>
-          </div>
-          <div class="hp" aria-hidden="true">
-            <label for="jf-website">Leave this empty</label>
-            <input id="jf-website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <button class="btn btn-gold btn-block" type="submit" id="jf-submit">Send my details</button>
-          <p class="form-status" id="jf-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-
-    <!-- SPONSORS -->
-    <section class="section" id="sponsors">
-      <div class="wrap">
-        <h2 class="ribbon">Our sponsors</h2>
-        <p class="section-intro">Local businesses keep local cricket going. Thank you to everyone who backs the Panthers.</p>
-        <div class="sponsors" id="sponsor-list"></div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section section-tint" id="contact">
-      <div class="wrap contact-grid">
-        <div>
-          <h2 class="ribbon">Find us</h2>
-          <dl class="contact-list" id="contact-list"></dl>
+            <button class="btn btn-gold btn-block" type="submit" id="jf-submit">
+              Send my details
+            </button>
+            <p
+              class="form-status"
+              id="jf-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
         </div>
-        <div class="map">
-          <iframe id="map-frame" title="Map of the Panthers' home ground" src="about:blank" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </section>
+
+      <!-- SPONSORS -->
+      <section class="section" id="sponsors">
+        <div class="wrap">
+          <h2 class="ribbon">Our sponsors</h2>
+          <p class="section-intro">
+            Local businesses keep local cricket going. Thank you to everyone who
+            backs the Panthers.
+          </p>
+          <div class="sponsors" id="sponsor-list"></div>
         </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section section-tint" id="contact">
+        <div class="wrap contact-grid">
+          <div>
+            <h2 class="ribbon">Find us</h2>
+            <dl class="contact-list" id="contact-list"></dl>
+          </div>
+          <div class="map">
+            <iframe
+              id="map-frame"
+              title="Map of the Panthers' home ground"
+              src="about:blank"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <img src="assets/logo.png" alt="" width="56" height="66" />
+        <p>Evandale Panthers Cricket Club<br /><span>Go Panthers.</span></p>
+        <p class="footer-small">
+          &copy; <span id="year"></span> Evandale Panthers CC ·
+        </p>
       </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <img src="assets/logo.png" alt="" width="56" height="66">
-      <p>Evandale Panthers Cricket Club<br><span>Go Panthers.</span></p>
-      <p class="footer-small">&copy; <span id="year"></span> Evandale Panthers CC · <a href="#main" data-scroll-top>Back to top</a></p>
-    </div>
-  </footer>
+    <button
+      type="button"
+      class="to-top"
+      id="to-top"
+      aria-label="Back to top"
+      data-scroll-top
+      hidden
+    >
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path
+          d="M12 5l-7 7m7-7l7 7M12 5v14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
 
-  <button type="button" class="to-top" id="to-top" aria-label="Back to top" data-scroll-top hidden>
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5l-7 7m7-7l7 7M12 5v14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-
-  <script src="js/main.js" defer></script>
-</body>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

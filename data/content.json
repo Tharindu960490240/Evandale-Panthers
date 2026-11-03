@@ -1,11 +1,11 @@
 {
   "_readme": "Backup content. Used until the Google Sheet is connected (GOOGLE_SHEET_ID). Entries with \"sample\": true are examples – replace them.",
   "club": {
-    "email": "hello@example.com",
-    "phone": "",
-    "ground": "Evandale, Tasmania",
-    "ground_address": "",
-    "map_query": "Evandale Tasmania",
+    "email": "evandale.panthers.cc@outlook.com",
+    "phone": "0417 556 977",
+    "ground": "Morven Park",
+    "ground_address": "Barclay Street, Evandale TAS 7212",
+    "map_query": "Morven Park, Barclay Street, Evandale TAS 7212",
     "facebook": "https://www.facebook.com/EvandalePanthers/",
     "instagram": "",
     "playhq_url": "",

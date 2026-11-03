@@ -267,43 +267,112 @@ function renderLadder() {
 }
 
 /* ---------- squad ---------- */
-const ROLE_TABS = [["All", "All players"], ["Batter", "Batters"], ["Bowler", "Bowlers"], ["All-rounder", "All-rounders"], ["Keeper", "Keepers"]];
+const ROLES = [["All", "All roles"], ["Batter", "Batters"], ["Bowler", "Bowlers"], ["All-rounder", "All-rounders"], ["Keeper", "Keepers"]];
+const isJuniorTeam = (name) => /\bu\s?\d{1,2}s?\b|under\s*\d+|junior/i.test(String(name || ""));
+
+// A player's side: their own gender column, else their team's, else guessed from the team name.
+function playerGender(p, teamsByName) {
+  if (p.gender) return p.gender;
+  const t = teamsByName[p.team];
+  if (t && t.gender) return t.gender;
+  if (/female|women|girls|boom/i.test(p.team)) return "Women";
+  return "";
+}
 
 function renderSquad() {
-  const squad = state.content.squad || [];
+  const club = state.content.club || {};
+  const teams = state.content.teams || [];
+  const teamsByName = Object.fromEntries(teams.map((t) => [t.name, t]));
+  const showJuniors = /^(y|yes|true)$/i.test(club.show_junior_players || "");
+
+  const all = (state.content.squad || []).map((p) => ({ ...p, side: playerGender(p, teamsByName) }));
+  const hiddenJuniors = showJuniors ? 0 : all.filter((p) => isJuniorTeam(p.team)).length;
+  const squad = showJuniors ? all : all.filter((p) => !isJuniorTeam(p.team));
+
   showSection("squad", squad.length > 0);
   if (!squad.length) return;
   $("#squad-sample").hidden = !squad.some((p) => p.sample);
+  $("#squad-junior-note").hidden = hiddenJuniors === 0;
 
+  // Team order follows the Teams list; unknown teams go last.
+  const order = teams.map((t) => t.name);
+  const teamNames = [...new Set(squad.map((p) => p.team || "Other"))]
+    .sort((a, b) => (order.indexOf(a) + 1 || 999) - (order.indexOf(b) + 1 || 999));
+  const sides = ["Men", "Women"].filter((g) => squad.some((p) => p.side === g));
   const roles = new Set(squad.map((p) => p.role));
-  const tabs = $("#squad-tabs");
-  const available = ROLE_TABS.filter(([r]) => r === "All" || roles.has(r));
-  tabs.innerHTML = available.map(([r, label]) =>
-    `<button type="button" class="tab" data-role="${r}" aria-pressed="${r === "All"}">${label}</button>`).join("");
 
-  const draw = (role) => {
-    const list = role === "All" ? squad : squad.filter((p) => p.role === role);
-    $("#squad-list").innerHTML = list.map((p) => {
-      const photo = safeUrl(p.photo);
-      return `
+  const f = { team: "All", side: "All", role: "All" };
+
+  $("#squad-side").innerHTML = sides.length > 1
+    ? ["All", ...sides].map((g) => `<button type="button" class="seg" data-side="${g}" aria-pressed="${g === "All"}">${g === "All" ? "Everyone" : g === "Men" ? "Men's" : "Women's"}</button>`).join("")
+    : "";
+  $("#squad-side").hidden = sides.length < 2;
+
+  const roleSel = $("#squad-role");
+  roleSel.innerHTML = ROLES.filter(([r]) => r === "All" || roles.has(r)).map(([r, l]) => `<option value="${r}">${l}</option>`).join("");
+
+  const teamTabs = $("#squad-tabs");
+  const drawTeamTabs = () => {
+    const visible = teamNames.filter((t) => f.side === "All" || squad.some((p) => p.team === t && p.side === f.side));
+    if (f.team !== "All" && !visible.includes(f.team)) f.team = "All";
+    teamTabs.innerHTML = visible.length > 1
+      ? ["All", ...visible].map((t) => `<button type="button" class="tab" data-team="${escapeHtml(t)}" aria-pressed="${t === f.team}">${escapeHtml(t === "All" ? "All teams" : t)}</button>`).join("")
+      : "";
+  };
+
+  const card = (p) => {
+    const photo = safeUrl(p.photo);
+    return `
       <li class="player">
         <div class="avatar">${photo ? `<img src="${escapeHtml(photo)}" alt="" loading="lazy">` : `<span>${escapeHtml(initials(p.name))}</span>`}
           ${p.captain ? `<span class="cap" title="${p.captain === "VC" ? "Vice-captain" : "Captain"}">${escapeHtml(p.captain)}</span>` : ""}
         </div>
         <div class="player-info">
           <strong>${escapeHtml(p.name)}</strong>
-          <span>${escapeHtml([p.role, p.team].filter(Boolean).join(" · "))}</span>
+          <span>${escapeHtml(p.role || "")}</span>
           ${p.note ? `<em>${escapeHtml(p.note)}</em>` : ""}
         </div>
       </li>`;
-    }).join("");
   };
-  tabs.onclick = (e) => {
+
+  const draw = () => {
+    const list = squad.filter((p) =>
+      (f.team === "All" || (p.team || "Other") === f.team) &&
+      (f.side === "All" || p.side === f.side) &&
+      (f.role === "All" || p.role === f.role));
+    // Captain first, then vice-captain, then by name
+    const rank = (p) => (p.captain === "C" ? 0 : p.captain === "VC" ? 1 : 2);
+    list.sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name));
+
+    const groups = teamNames.map((t) => [t, list.filter((p) => (p.team || "Other") === t)]).filter(([, ps]) => ps.length);
+    $("#squad-list").innerHTML = groups.length
+      ? groups.map(([t, ps]) => {
+          const info = teamsByName[t] || {};
+          return `
+          <section class="squad-group">
+            <h3 class="squad-team">${escapeHtml(t)}${info.competition ? `<small>${escapeHtml(info.competition)}</small>` : ""}<span class="count">${ps.length} ${ps.length === 1 ? "player" : "players"}</span></h3>
+            <ul class="squad">${ps.map(card).join("")}</ul>
+          </section>`;
+        }).join("")
+      : `<p class="squad-empty">No players match these filters.</p>`;
+  };
+
+  $("#squad-side").onclick = (e) => {
+    const b = e.target.closest(".seg"); if (!b) return;
+    f.side = b.dataset.side;
+    $$(".seg", $("#squad-side")).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    drawTeamTabs(); draw();
+  };
+  teamTabs.onclick = (e) => {
     const b = e.target.closest(".tab"); if (!b) return;
-    $$(".tab", tabs).forEach((t) => t.setAttribute("aria-pressed", String(t === b)));
-    draw(b.dataset.role);
+    f.team = b.dataset.team;
+    $$(".tab", teamTabs).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    draw();
   };
-  draw("All");
+  roleSel.onchange = () => { f.role = roleSel.value; draw(); };
+
+  drawTeamTabs();
+  draw();
 }
 
 /* ---------- teams ---------- */
@@ -311,7 +380,8 @@ function renderTeams() {
   $("#teams-list").innerHTML = (state.content.teams || []).map((t) => `
     <article class="team">
       <h4>${escapeHtml(t.name)}</h4>
-      <p>${escapeHtml(t.blurb)}</p>
+      ${t.competition ? `<p class="team-comp">${escapeHtml(t.competition)}</p>` : ""}
+      ${t.blurb ? `<p>${escapeHtml(t.blurb)}</p>` : ""}
       <dl>
         ${t.plays ? `<dt>Plays</dt><dd>${escapeHtml(t.plays)}</dd>` : ""}
         ${t.training ? `<dt>Training</dt><dd>${escapeHtml(t.training)}</dd>` : ""}

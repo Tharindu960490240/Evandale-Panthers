@@ -11,8 +11,8 @@
 
    Tabs it reads (names must match; see docs/sheet-template/):
      Club      key | value
-     Teams     name | blurb | plays | training
-     Squad     name | role | team | captain | photo | note
+     Teams     name | competition | gender | blurb | plays | training
+     Squad     name | role | team | gender | captain | photo | note
      News      date | title | summary | link | image
      Gallery   image | caption
      Sponsors  name | url | logo | tier
@@ -50,9 +50,9 @@ export default async function handler(req, res) {
       configured: true,
       updatedAt: new Date().toISOString(),
       club: toClub(t.Club.rows),
-      teams: t.Teams.rows.map((r) => ({ name: r.name, blurb: r.blurb || "", plays: r.plays || "", training: r.training || "" })),
+      teams: t.Teams.rows.map((r) => ({ name: r.name, competition: r.competition || "", gender: normaliseGender(r.gender), blurb: r.blurb || "", plays: r.plays || "", training: r.training || "" })),
       squad: t.Squad.rows.map((r) => ({
-        name: r.name, role: normaliseRole(r.role), team: r.team || "",
+        name: r.name, role: normaliseRole(r.role), team: r.team || "", gender: normaliseGender(r.gender),
         captain: /^(y|yes|true|c|captain|vc|vice)/i.test(r.captain || "") ? (/^v/i.test(r.captain) ? "VC" : "C") : "",
         photo: imageUrl(r.photo), note: r.note || "",
       })),
@@ -128,6 +128,14 @@ function toClub(rows) {
     if (key) out[key] = r.value || "";
   }
   return out;
+}
+
+function normaliseGender(g) {
+  const s = String(g || "").trim().toLowerCase();
+  if (/^(f|female|w|women|woman|girl|girls)$/.test(s)) return "Women";
+  if (/^(m|male|men|man|boy|boys)$/.test(s)) return "Men";
+  if (/mixed|open/.test(s)) return "Mixed";
+  return "";
 }
 
 function normaliseRole(role) {

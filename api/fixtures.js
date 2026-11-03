@@ -255,11 +255,14 @@ function normaliseGame(g, team, season, env) {
   };
 }
 
-// Prefer the grade name (e.g. "A Grade") so tabs are short and clear.
+// Label teams the way the club does: "Evandale Panthers A-Grade" -> "A-Grade".
+// Falls back to the grade name if the team name is just the club name.
 function teamLabel(team, g) {
-  const grade = (team.grade && team.grade.name) || (g.grade && g.grade.name);
-  if (grade) return grade;
-  return team.name || "Panthers";
+  const name = String(team.name || "").trim();
+  const short = name.replace(/^evandale(\s+panthers)?(\s+cricket\s+club)?[\s\-–]*/i, "").trim();
+  if (short) return short;
+  const grade = (team.grade && team.grade.name) || (g && g.grade && g.grade.name);
+  return grade || name || "Panthers";
 }
 
 function resultText(us, them, status, isBye) {

@@ -1,4 +1,7 @@
-name,blurb,plays,training
-A Grade,Our top senior side.,Saturdays,"Tue & Thu, 5:30pm"
-B Grade,Senior cricket with a social edge.,Saturdays,"Tue & Thu, 5:30pm"
-Juniors,For kids learning and loving the game.,Friday evenings,"Wed, 4:30pm"
+name,competition,gender,blurb,plays,training
+Premier League,TCL Premier League,Men,The club's top side.,,
+A-Grade,TCL A-Grade,Men,Senior cricket in the TCL A-Grade.,,
+B-Grade,TCL B-Grade,Men,Senior cricket in the TCL B-Grade.,,
+C-Grade,TCL C-Grade,Men,Senior cricket with a social edge.,,
+Female Boom,TCL Female Boom Division 2,Women,The Panthers' women's side.,,
+U12s Division 2,CN Under 12s Division 2,Mixed,Junior cricket for kids learning the game.,,

@@ -123,12 +123,18 @@
     <!-- SQUAD -->
     <section class="section section-tint" id="squad" hidden>
       <div class="wrap">
-        <div class="section-head">
-          <h2 class="ribbon">The squad</h2>
-          <div class="tabs" role="group" aria-label="Filter players" id="squad-tabs"></div>
+        <h2 class="ribbon">The squad</h2>
+        <div class="squad-filters">
+          <div class="segmented" role="group" aria-label="Men's or women's" id="squad-side"></div>
+          <label class="select-label">
+            <span class="visually-hidden">Filter by role</span>
+            <select id="squad-role"></select>
+          </label>
         </div>
+        <div class="tabs" role="group" aria-label="Filter by team" id="squad-tabs"></div>
         <p class="sample-note" id="squad-sample" hidden>These are example players. Add the real squad in the club's Google Sheet.</p>
-        <ul class="squad" id="squad-list"></ul>
+        <div id="squad-list"></div>
+        <p class="fine-print" id="squad-junior-note" hidden>Junior players aren't listed online to protect their privacy.</p>
       </div>
     </section>
 

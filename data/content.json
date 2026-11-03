@@ -9,34 +9,66 @@
     "facebook": "https://www.facebook.com/EvandalePanthers/",
     "instagram": "",
     "playhq_url": "",
-    "training": "Tuesday & Thursday, 5:30pm",
-    "registration_url": ""
+    "training": "",
+    "registration_url": "",
+    "show_junior_players": "no"
   },
   "teams": [
     {
-      "name": "A Grade",
-      "blurb": "Our top senior side.",
-      "plays": "Saturdays",
-      "training": "Tue & Thu, 5:30pm"
+      "name": "Premier League",
+      "competition": "TCL Premier League",
+      "gender": "Men",
+      "blurb": "The club's top side.",
+      "plays": "",
+      "training": ""
     },
     {
-      "name": "B Grade",
+      "name": "A-Grade",
+      "competition": "TCL A-Grade",
+      "gender": "Men",
+      "blurb": "Senior cricket in the TCL A-Grade.",
+      "plays": "",
+      "training": ""
+    },
+    {
+      "name": "B-Grade",
+      "competition": "TCL B-Grade",
+      "gender": "Men",
+      "blurb": "Senior cricket in the TCL B-Grade.",
+      "plays": "",
+      "training": ""
+    },
+    {
+      "name": "C-Grade",
+      "competition": "TCL C-Grade",
+      "gender": "Men",
       "blurb": "Senior cricket with a social edge.",
-      "plays": "Saturdays",
-      "training": "Tue & Thu, 5:30pm"
+      "plays": "",
+      "training": ""
     },
     {
-      "name": "Juniors",
-      "blurb": "For kids learning and loving the game.",
-      "plays": "Friday evenings",
-      "training": "Wed, 4:30pm"
+      "name": "Female Boom",
+      "competition": "TCL Female Boom Division 2",
+      "gender": "Women",
+      "blurb": "The Panthers' women's side.",
+      "plays": "",
+      "training": ""
+    },
+    {
+      "name": "U12s Division 2",
+      "competition": "CN Under 12s Division 2",
+      "gender": "Mixed",
+      "blurb": "Junior cricket for kids learning the game.",
+      "plays": "",
+      "training": ""
     }
   ],
   "squad": [
     {
       "name": "Player One",
       "role": "Batter",
-      "team": "A Grade",
+      "team": "Premier League",
+      "gender": "Men",
       "captain": "C",
       "photo": "",
       "note": "",
@@ -45,7 +77,8 @@
     {
       "name": "Player Two",
       "role": "Bowler",
-      "team": "A Grade",
+      "team": "Premier League",
+      "gender": "Men",
       "captain": "VC",
       "photo": "",
       "note": "",
@@ -54,7 +87,8 @@
     {
       "name": "Player Three",
       "role": "All-rounder",
-      "team": "A Grade",
+      "team": "Premier League",
+      "gender": "Men",
       "captain": "",
       "photo": "",
       "note": "",
@@ -63,7 +97,8 @@
     {
       "name": "Player Four",
       "role": "Keeper",
-      "team": "A Grade",
+      "team": "Premier League",
+      "gender": "Men",
       "captain": "",
       "photo": "",
       "note": "",
@@ -72,7 +107,8 @@
     {
       "name": "Player Five",
       "role": "Batter",
-      "team": "B Grade",
+      "team": "A-Grade",
+      "gender": "Men",
       "captain": "C",
       "photo": "",
       "note": "",
@@ -81,7 +117,8 @@
     {
       "name": "Player Six",
       "role": "Bowler",
-      "team": "B Grade",
+      "team": "A-Grade",
+      "gender": "Men",
       "captain": "",
       "photo": "",
       "note": "",
@@ -90,7 +127,8 @@
     {
       "name": "Player Seven",
       "role": "All-rounder",
-      "team": "B Grade",
+      "team": "A-Grade",
+      "gender": "Men",
       "captain": "",
       "photo": "",
       "note": "",
@@ -98,8 +136,69 @@
     },
     {
       "name": "Player Eight",
+      "role": "Batter",
+      "team": "B-Grade",
+      "gender": "Men",
+      "captain": "C",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Nine",
       "role": "Bowler",
-      "team": "B Grade",
+      "team": "B-Grade",
+      "gender": "Men",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Ten",
+      "role": "All-rounder",
+      "team": "C-Grade",
+      "gender": "Men",
+      "captain": "C",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Eleven",
+      "role": "Bowler",
+      "team": "C-Grade",
+      "gender": "Men",
+      "captain": "",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Twelve",
+      "role": "Batter",
+      "team": "Female Boom",
+      "gender": "Women",
+      "captain": "C",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Thirteen",
+      "role": "Bowler",
+      "team": "Female Boom",
+      "gender": "Women",
+      "captain": "VC",
+      "photo": "",
+      "note": "",
+      "sample": true
+    },
+    {
+      "name": "Player Fourteen",
+      "role": "Keeper",
+      "team": "Female Boom",
+      "gender": "Women",
       "captain": "",
       "photo": "",
       "note": "",
@@ -129,7 +228,7 @@
     {
       "date": "2026-10-17",
       "time": "13:00",
-      "team": "A Grade",
+      "team": "A-Grade",
       "opponent": "Opponent TBC",
       "venue": "Evandale",
       "home": true,
@@ -138,7 +237,7 @@
     {
       "date": "2026-10-24",
       "time": "13:00",
-      "team": "A Grade",
+      "team": "A-Grade",
       "opponent": "Opponent TBC",
       "venue": "Away",
       "home": false,
@@ -147,7 +246,7 @@
     {
       "date": "2026-10-31",
       "time": "13:00",
-      "team": "A Grade",
+      "team": "A-Grade",
       "opponent": "Opponent TBC",
       "venue": "Evandale",
       "home": true,
@@ -156,7 +255,7 @@
     {
       "date": "2026-11-07",
       "time": "13:00",
-      "team": "A Grade",
+      "team": "A-Grade",
       "opponent": "Opponent TBC",
       "venue": "Away",
       "home": false,
@@ -165,7 +264,7 @@
     {
       "date": "2026-11-14",
       "time": "13:00",
-      "team": "A Grade",
+      "team": "A-Grade",
       "opponent": "Opponent TBC",
       "venue": "Evandale",
       "home": true,
@@ -174,7 +273,7 @@
     {
       "date": "2026-10-17",
       "time": "13:00",
-      "team": "B Grade",
+      "team": "B-Grade",
       "opponent": "Opponent TBC",
       "venue": "Away",
       "home": false,
@@ -183,7 +282,7 @@
     {
       "date": "2026-10-31",
       "time": "13:00",
-      "team": "B Grade",
+      "team": "B-Grade",
       "opponent": "Opponent TBC",
       "venue": "Away",
       "home": false,
@@ -192,7 +291,7 @@
     {
       "date": "2026-11-07",
       "time": "13:00",
-      "team": "B Grade",
+      "team": "B-Grade",
       "opponent": "Opponent TBC",
       "venue": "Evandale",
       "home": true,
@@ -201,11 +300,29 @@
     {
       "date": "2026-11-06",
       "time": "17:30",
-      "team": "Juniors",
+      "team": "U12s Division 2",
       "opponent": "Opponent TBC",
       "venue": "Evandale",
       "home": true,
       "result": ""
+    },
+    {
+      "date": "2026-11-07",
+      "time": "13:00",
+      "team": "Premier League",
+      "opponent": "Opponent TBC",
+      "venue": "Evandale",
+      "home": true,
+      "result": ""
+    },
+    {
+      "date": "2026-10-24",
+      "time": "13:00",
+      "team": "Premier League",
+      "opponent": "Opponent TBC",
+      "venue": "Away",
+      "home": false,
+      "result": "Won by 6 wkts"
     }
   ]
 }

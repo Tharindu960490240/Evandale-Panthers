@@ -365,6 +365,26 @@ a.sponsor:hover { border-color: var(--panther-blue); color: var(--panther-blue);
 .player-info span { color: var(--muted); font-size: .92rem; }
 .player-info em { font-style: normal; font-size: .85rem; color: var(--panther-blue); }
 
+.squad-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 14px; }
+.select-label select {
+  font: 600 .95rem var(--body); color: var(--night); background: #fff;
+  border: 2px solid var(--night); border-radius: 999px; padding: 8px 36px 8px 16px; min-height: 42px; cursor: pointer;
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--night) 50%), linear-gradient(135deg, var(--night) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 52%, calc(100% - 12px) 52%; background-size: 6px 6px; background-repeat: no-repeat;
+}
+#squad-tabs { margin-bottom: 24px; }
+.squad-group + .squad-group { margin-top: 32px; }
+.squad-team {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px;
+  font-family: var(--display); font-weight: 900; font-size: 1.9rem; line-height: 1; color: var(--panther-blue);
+  margin: 0 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--night);
+}
+.squad-team small { font-family: var(--body); font-weight: 600; font-size: .9rem; color: var(--muted); }
+.squad-team .count { margin-left: auto; font-family: var(--body); font-weight: 600; font-size: .85rem; color: var(--muted); }
+.squad-empty { color: var(--muted); padding: 24px 0; }
+.team-comp { font-weight: 600; font-size: .9rem; color: var(--muted); margin: -2px 0 8px !important; }
+
 /* ---------- Club: teams sub-section ---------- */
 .sub-head { font-family: var(--display); font-weight: 900; font-size: clamp(1.7rem, 3vw, 2.2rem); margin: clamp(48px, 7vw, 80px) 0 16px; color: var(--night); }
 
